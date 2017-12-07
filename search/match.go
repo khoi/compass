@@ -1,10 +1,23 @@
 package search
 
-func Find(needle, haystack string) bool {
+import "unicode"
+
+func Match(needle, haystack string) bool {
+	return match(needle, haystack, func(r1 rune, r2 rune) bool {
+		return r1 == r2
+	})
+}
+
+func MatchFold(needle, haystack string) bool {
+	return match(needle, haystack, func(r1 rune, r2 rune) bool {
+		return unicode.ToLower(r1) == unicode.ToLower(r2)
+	})
+}
+
+func match(needle, haystack string, compare func(rune, rune) bool) bool {
 	if len(needle) > len(haystack) {
 		return false
 	}
-
 	if len(needle) == len(haystack) {
 		return needle == haystack
 	}
@@ -16,7 +29,7 @@ func Find(needle, haystack string) bool {
 		if hIdx >= len(h) {
 			return false
 		}
-		if n[nIdx] == h[(hIdx)] {
+		if compare(n[nIdx], h[hIdx]) {
 			nIdx++
 		}
 		hIdx++

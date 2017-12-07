@@ -25,7 +25,7 @@ func CmdLs(db database.DB) func(*cli.Context) error {
 			filtered = entries
 		} else {
 			for _, e := range entries {
-				if search.Find(query, e.Path) {
+				if search.MatchFold(query, e.Path) {
 					filtered = append(filtered, e)
 				}
 			}
