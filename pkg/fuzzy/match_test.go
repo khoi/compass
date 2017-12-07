@@ -7,6 +7,8 @@ func TestMatch(t *testing.T) {
 		needle, haystack string
 		expected         bool
 	}{
+		{"gosextant", "gosextant", true},
+		{"gosextant", "sextant", false},
 		{"gosextant", "go/src/github.com/khoiln/sextant", true},
 		{"Gosextant", "go/src/github.com/khoiln/sextant", false},
 		{"srghub", "go/src/github.com/khoiln/sextant", true},
@@ -31,6 +33,8 @@ func TestMatchFold(t *testing.T) {
 		needle, haystack string
 		expected         bool
 	}{
+		{"goseXtant", "gosextant", true},
+		{"goSextant", "Sextant", false},
 		{"gosextant", "go/src/github.com/khoiln/sextant", true},
 		{"Gosextant", "go/src/github.com/khoiln/sextant", true},
 		{"srgHub", "go/src/github.com/khoiln/sextant", true},

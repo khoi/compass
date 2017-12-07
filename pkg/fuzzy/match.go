@@ -22,8 +22,9 @@ func match(needle, haystack string, compare func(rune, rune) bool) bool {
 	if len(needle) > len(haystack) {
 		return false
 	}
-	if len(needle) == len(haystack) {
-		return needle == haystack
+
+	if needle == haystack {
+		return true
 	}
 
 	n, h := []rune(needle), []rune(haystack)
