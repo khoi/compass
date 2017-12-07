@@ -1,7 +1,7 @@
-package command
+package cmd
 
 import (
-	"github.com/khoiln/sextant/database"
+	"github.com/khoiln/sextant/pkg/database"
 	"github.com/urfave/cli"
 )
 

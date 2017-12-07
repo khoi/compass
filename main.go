@@ -5,8 +5,8 @@ import (
 
 	"fmt"
 
-	"github.com/khoiln/sextant/command"
-	"github.com/khoiln/sextant/database"
+	"github.com/khoiln/sextant/cmd"
+	"github.com/khoiln/sextant/pkg/database"
 	"github.com/urfave/cli"
 )
 
@@ -28,19 +28,19 @@ func main() {
 		{
 			Name:   "add",
 			Usage:  "Add new entry",
-			Action: command.CmdAdd(db),
+			Action: cmd.CmdAdd(db),
 			Flags:  []cli.Flag{},
 		},
 		{
 			Name:   "ls",
 			Usage:  "List the directories sorted by their rank",
-			Action: command.CmdLs(db),
+			Action: cmd.CmdLs(db),
 			Flags:  []cli.Flag{},
 		},
 		{
 			Name:   "shell",
 			Usage:  "Prints out the shell integration scripts.",
-			Action: command.CmdShell,
+			Action: cmd.CmdShell,
 			Flags: []cli.Flag{
 				cli.StringFlag{
 					Name:  "type",
@@ -52,7 +52,7 @@ func main() {
 		{
 			Name:   "reset",
 			Usage:  "When you need a new beginning.",
-			Action: command.CmdReset(db),
+			Action: cmd.CmdReset(db),
 			Flags:  []cli.Flag{},
 		},
 	}

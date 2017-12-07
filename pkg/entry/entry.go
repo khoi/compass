@@ -1,4 +1,4 @@
-package search
+package entry
 
 type Entry struct {
 	Path         string

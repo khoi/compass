@@ -1,4 +1,4 @@
-package command
+package cmd
 
 import (
 	"path/filepath"
@@ -7,8 +7,8 @@ import (
 
 	"time"
 
-	"github.com/khoiln/sextant/database"
-	"github.com/khoiln/sextant/search"
+	"github.com/khoiln/sextant/pkg/database"
+	"github.com/khoiln/sextant/pkg/entry"
 	"github.com/urfave/cli"
 )
 
@@ -24,7 +24,7 @@ func CmdAdd(db database.DB) func(*cli.Context) error {
 			return cli.NewExitError(err.Error(), 1)
 		}
 
-		sort.Sort(search.ByPath(entries))
+		sort.Sort(entry.ByPath(entries))
 		idx := sort.Search(len(entries), func(i int) bool {
 			return entries[i].Path >= path
 		})
@@ -35,7 +35,7 @@ func CmdAdd(db database.DB) func(*cli.Context) error {
 		} else { // Create a new entry
 			entries = append(entries, nil)
 			copy(entries[idx+1:], entries[idx:])
-			entries[idx] = &search.Entry{
+			entries[idx] = &entry.Entry{
 				Path:         path,
 				VisitedCount: 1,
 				LastVisited:  int(time.Now().Unix()),

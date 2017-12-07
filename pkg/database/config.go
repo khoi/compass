@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strconv"
 
-	"github.com/khoiln/sextant/search"
+	"github.com/khoiln/sextant/pkg/entry"
 )
 
 const (
@@ -14,8 +14,8 @@ const (
 )
 
 type DB interface {
-	Read() ([]*search.Entry, error)
-	Write([]*search.Entry) error
+	Read() ([]*entry.Entry, error)
+	Write([]*entry.Entry) error
 	Truncate() error
 }
 
@@ -23,7 +23,7 @@ type fileDb struct {
 	dbPath string
 }
 
-func (f *fileDb) Write(entries []*search.Entry) error {
+func (f *fileDb) Write(entries []*entry.Entry) error {
 	file, err := createOrOpenLockedFile(f.dbPath)
 	if err != nil {
 		return err
@@ -43,7 +43,7 @@ func (f *fileDb) Write(entries []*search.Entry) error {
 	return nil
 }
 
-func (f *fileDb) Read() ([]*search.Entry, error) {
+func (f *fileDb) Read() ([]*entry.Entry, error) {
 	file, err := createOrOpenLockedFile(f.dbPath)
 	if err != nil {
 		return nil, err
@@ -57,7 +57,7 @@ func (f *fileDb) Read() ([]*search.Entry, error) {
 		return nil, err
 	}
 
-	entries := make([]*search.Entry, 0, len(records))
+	entries := make([]*entry.Entry, 0, len(records))
 	for _, r := range records {
 		visitedCount, err := strconv.Atoi(r[1])
 		lastVisited, err := strconv.Atoi(r[2])
@@ -66,7 +66,7 @@ func (f *fileDb) Read() ([]*search.Entry, error) {
 			continue
 		}
 
-		entries = append(entries, &search.Entry{
+		entries = append(entries, &entry.Entry{
 			Path:         r[0],
 			VisitedCount: visitedCount,
 			LastVisited:  lastVisited,
