@@ -87,20 +87,20 @@ func (f *fileDb) Truncate() error {
 	return file.Sync()
 }
 
-func New(fileName string) (DB, error) {
+func New(filePath string) (DB, error) {
+	return &fileDb{
+		dbPath: filePath,
+	}, nil
+}
+
+func NewDefault() (DB, error) {
 	usr, err := user.Current()
 
 	if err != nil {
 		return nil, err
 	}
 
-	fullFilePath := filepath.Join(usr.HomeDir, fileName)
+	fullFilePath := filepath.Join(usr.HomeDir, defaultFileName)
 
-	return &fileDb{
-		dbPath: fullFilePath,
-	}, nil
-}
-
-func NewDefault() (DB, error) {
-	return New(defaultFileName)
+	return New(fullFilePath)
 }

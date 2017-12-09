@@ -5,8 +5,7 @@ import (
 	"github.com/urfave/cli"
 )
 
-func CmdReset(db database.DB) func(*cli.Context) error {
-	return func(c *cli.Context) error {
-		return db.Truncate()
-	}
+func CmdReset(c *cli.Context) error {
+	db := c.App.Metadata["db"].(database.DB)
+	return db.Truncate()
 }
