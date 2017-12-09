@@ -1,6 +1,8 @@
 package app
 
 import (
+	"sort"
+
 	"github.com/khoiln/sextant/cmd"
 	"github.com/khoiln/sextant/pkg/database"
 	"github.com/urfave/cli"
@@ -14,7 +16,7 @@ func NewApp() *cli.App {
 	app.EnableBashCompletion = true
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
-			Name:  "db",
+			Name:  "database, db",
 			Usage: "Path to the db file (Default: ~/.sextant)",
 		},
 	}
@@ -40,13 +42,11 @@ func NewApp() *cli.App {
 			Name:   "add",
 			Usage:  "Add new entry",
 			Action: cmd.CmdAdd,
-			Flags:  []cli.Flag{},
 		},
 		{
 			Name:   "ls",
 			Usage:  "List the directories sorted by their rank",
 			Action: cmd.CmdLs,
-			Flags:  []cli.Flag{},
 		},
 		{
 			Name:   "shell",
@@ -64,10 +64,18 @@ func NewApp() *cli.App {
 			Name:   "reset",
 			Usage:  "When you need a new beginning.",
 			Action: cmd.CmdReset,
-			Flags:  []cli.Flag{},
+		},
+		{
+			Name:   "cd",
+			Usage:  "Print the top match for search terms",
+			Action: cmd.CmdCd,
 		},
 	}
 
 	app.CommandNotFound = CommandNotFound
+
+	sort.Sort(cli.FlagsByName(app.Flags))
+	sort.Sort(cli.CommandsByName(app.Commands))
+
 	return app
 }
