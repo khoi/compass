@@ -22,12 +22,11 @@ eval "$(sextant shell --type "$shell")"
 
 const zsh = `__sextant_chpwd() {
 	[[ "$(pwd)" == "$HOME" ]] && return
-    sextant add "$(pwd)"
+    (sextant add "$(pwd)" &)
 }
-
-typeset -gaU chpwd_functions
-
-chpwd_functions+=__sextant_chpwd
+[[ -n "${precmd_functions[(r)__sextant_chpwd]}" ]] || {
+	precmd_functions[$(($#precmd_functions+1))]=__sextant_chpwd
+}
 `
 
 const bash = `__sextant_chpwd() {
