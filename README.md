@@ -33,3 +33,8 @@ Add this to the end of your `.zshrc` or `.bash_profile`
 eval "$(sextant shell)"
 ```
 
+## Improvements
+
+- [ ] Improving how scoring works, for instance: prioritize matches between `/`
+- [ ] Add shells auto completion
+
