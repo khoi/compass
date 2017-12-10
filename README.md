@@ -36,5 +36,6 @@ eval "$(sextant shell)"
 ## Improvements
 
 - [ ] Improving how scoring works, for instance: prioritize matches between `/`
+- [ ] Add support for child queries. For instance: `s go gallery` 
 - [ ] Add shells auto completion
 
