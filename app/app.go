@@ -8,10 +8,10 @@ import (
 	"github.com/urfave/cli"
 )
 
-func NewApp() *cli.App {
+func NewApp(version string) *cli.App {
 	app := cli.NewApp()
-	app.Name = Name
-	app.Version = Version
+	app.Name = "Sextant"
+	app.Version = version
 	app.Usage = "Sextant, navigate around your pirate 🛳"
 	app.EnableBashCompletion = true
 	app.Flags = []cli.Flag{

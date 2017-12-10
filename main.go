@@ -7,6 +7,6 @@ import (
 )
 
 func main() {
-	a := app.NewApp()
+	a := app.NewApp(Version)
 	a.Run(os.Args)
 }
