@@ -32,10 +32,10 @@ func CmdLs(c *cli.Context) error {
 		}
 	}
 
-	sort.Sort(entry.ByRank(filtered))
+	sort.Sort(entry.ByFerecency(filtered))
 
-	for i := len(filtered) - 1; i >= 0; i -= 1 {
-		fmt.Fprintf(c.App.Writer, "%s\n", filtered[i].Path)
+	for _, e := range filtered {
+		fmt.Fprintf(c.App.Writer, "%d \t %s\n", entry.Frecency(e), e.Path)
 	}
 
 	return nil

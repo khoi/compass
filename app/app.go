@@ -45,7 +45,7 @@ func NewApp() *cli.App {
 		},
 		{
 			Name:   "ls",
-			Usage:  "List the directories sorted by their rank",
+			Usage:  "List the directories along with their ranking",
 			Action: cmd.CmdLs,
 		},
 		{

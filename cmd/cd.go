@@ -32,7 +32,7 @@ func CmdCd(c *cli.Context) error {
 		}
 	}
 
-	sort.Sort(entry.ByRank(filtered))
+	sort.Sort(entry.ByFerecency(filtered))
 
 	if len(filtered) > 0 {
 		fmt.Fprintf(c.App.Writer, "%s\n", filtered[len(filtered)-1].Path)
