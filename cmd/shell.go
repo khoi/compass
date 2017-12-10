@@ -27,6 +27,10 @@ const zsh = `__sextant_chpwd() {
 [[ -n "${precmd_functions[(r)__sextant_chpwd]}" ]] || {
 	precmd_functions[$(($#precmd_functions+1))]=__sextant_chpwd
 }
+s() {
+	local output="$(sextant cd $@)"
+	test -d "$output" && builtin cd "$output"
+}
 `
 
 const bash = `__sextant_chpwd() {
@@ -35,6 +39,10 @@ const bash = `__sextant_chpwd() {
 }
 grep "sextant add" <<< "$PROMPT_COMMAND" >/dev/null || {
 	PROMPT_COMMAND="$PROMPT_COMMAND"$'\n''(__sextant_chpwd 2>/dev/null &);'
+}
+s() {
+	local output="$(sextant cd $@)"
+	test -d "$output" && builtin cd "$output"
 }
 `
 
