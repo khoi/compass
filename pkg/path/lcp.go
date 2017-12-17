@@ -5,7 +5,7 @@ import (
 	"path"
 )
 
-// LCP returns the longest common prefix for the list of path,
+// LCP returns the longest common path for the list of path,
 // or an empty string if no prefix is found.
 func LCP(l []string) string {
 	if len(l) == 0 {
@@ -13,33 +13,37 @@ func LCP(l []string) string {
 	}
 
 	if len(l) == 1 {
-		path.Clean(l[0])
+		return path.Clean(l[0])
 	}
 
-	c := []byte(path.Clean(l[0]))
-	c = append(c, os.PathSeparator)
+	min := []byte(path.Clean(l[0]))
+	min = append(min, os.PathSeparator)
+	max := min
 
 	for _, p := range l[1:] {
 		p = path.Clean(p)
 
-		if len(p) < len(c) {
-			c = c[:len(p)]
-		}
-
-		for i := 0; i < len(c); i++ {
-			if p[i] != c[i] {
-				c = c[:i]
-				break
-			}
+		switch {
+		case len(p) < len(min):
+			min = []byte(p)
+		case len(p) > len(min):
+			max = []byte(p)
 		}
 	}
 
-	for i := len(c) - 1; i >= 1; i-- {
-		if c[i] == os.PathSeparator {
-			c = c[:i]
+	for i := 0; i < len(min) && i < len(max); i++ {
+		if min[i] != max[i] {
+			min = min[:i]
 			break
 		}
 	}
 
-	return string(c)
+	for i := len(min) - 1; i >= 1; i-- {
+		if min[i] == os.PathSeparator {
+			min = min[:i]
+			break
+		}
+	}
+
+	return string(min)
 }

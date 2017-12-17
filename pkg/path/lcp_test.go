@@ -8,6 +8,8 @@ var testTable = []struct {
 	in  []string
 	out string
 }{
+	{[]string{"foo"}, "foo"},
+	{[]string{"/foo/bar/.."}, "/foo"},
 	{[]string{"foo", "bar"}, ""},
 	{[]string{"home/khoiln", "home/khoiln/foo", "home/khoiln/bar"}, "home/khoiln"},
 	{[]string{"home/khoiln/bar/..", "home/khoiln/foo"}, "home/khoiln"},
