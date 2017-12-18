@@ -8,6 +8,7 @@ import (
 
 	"github.com/khoiln/sextant/pkg/database"
 	"github.com/khoiln/sextant/pkg/entry"
+	"github.com/khoiln/sextant/pkg/path"
 	"github.com/urfave/cli"
 )
 
@@ -33,6 +34,15 @@ func CmdLs(c *cli.Context) error {
 	}
 
 	sort.Sort(entry.ByFerecency(filtered))
+
+	var paths []string
+	for _, e := range filtered {
+		paths = append(paths, e.Path)
+	}
+
+	if common := path.LCP(paths); common != "" {
+		fmt.Fprintf(c.App.Writer, "common \t %s\n", common)
+	}
 
 	for _, e := range filtered {
 		fmt.Fprintf(c.App.Writer, "%d \t %s\n", entry.Frecency(e), e.Path)

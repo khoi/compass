@@ -17,6 +17,8 @@ var testTable = []struct {
 	{[]string{"/abc/bcd/cdf", "/abc/bcd/cdf/foo", "/abc/bcd/chi/hij", "/abc/bcd/cdd"}, "/abc/bcd"},
 	{[]string{"./abc/bcd/cdf", "./abc/bcd/cdf/foo", "./abc/bcd/chi/hij", "./abc/bcd/cdd"}, "abc/bcd"},
 	{[]string{"/abc/bcd/cdf", "/"}, "/"},
+	{[]string{"/abc/def/ghj", "/abc/def"}, "/abc/def"},
+	{[]string{"Github/khoi/ios", "Github/khoi/webcontent-ios", "Github/khoi/ios/iosNetworking"}, "Github/khoi"},
 }
 
 func TestLCP(t *testing.T) {

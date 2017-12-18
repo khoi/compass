@@ -16,34 +16,34 @@ func LCP(l []string) string {
 		return path.Clean(l[0])
 	}
 
-	min := []byte(path.Clean(l[0]))
-	min = append(min, os.PathSeparator)
+	min := path.Clean(l[0])
 	max := min
 
 	for _, p := range l[1:] {
 		p = path.Clean(p)
 
 		switch {
-		case len(p) < len(min):
-			min = []byte(p)
-		case len(p) > len(min):
-			max = []byte(p)
+		case p < min:
+			min = p
+		case p > max:
+			max = p
 		}
 	}
 
-	for i := 0; i < len(min) && i < len(max); i++ {
-		if min[i] != max[i] {
-			min = min[:i]
+	result := append([]byte(min), os.PathSeparator)
+	for i := 0; i < len(result) && i < len(max); i++ {
+		if result[i] != max[i] {
+			result = result[:i]
 			break
 		}
 	}
 
-	for i := len(min) - 1; i >= 1; i-- {
-		if min[i] == os.PathSeparator {
-			min = min[:i]
+	for i := len(result) - 1; i >= 1; i-- {
+		if result[i] == os.PathSeparator {
+			result = result[:i]
 			break
 		}
 	}
 
-	return string(min)
+	return string(result)
 }
