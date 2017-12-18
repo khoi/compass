@@ -2,12 +2,12 @@ package cmd
 
 import (
 	"sort"
+	"strings"
 
 	"fmt"
 
 	"github.com/khoiln/sextant/pkg/database"
 	"github.com/khoiln/sextant/pkg/entry"
-	"github.com/khoiln/sextant/pkg/fuzzy"
 	"github.com/urfave/cli"
 )
 
@@ -26,7 +26,7 @@ func CmdLs(c *cli.Context) error {
 		filtered = entries
 	} else {
 		for _, e := range entries {
-			if fuzzy.MatchFold(query, e.Path) {
+			if strings.Contains(strings.ToLower(e.Path), query) {
 				filtered = append(filtered, e)
 			}
 		}
