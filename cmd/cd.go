@@ -27,7 +27,7 @@ func CmdCd(c *cli.Context) error {
 		filtered = entries
 	} else {
 		for _, e := range entries {
-			if strings.Contains(strings.ToLower(e.Path), query) {
+			if strings.Contains(e.Path, query) {
 				filtered = append(filtered, e)
 			}
 		}
@@ -47,10 +47,16 @@ func CmdCd(c *cli.Context) error {
 
 	output := paths[len(paths)-1]
 	if common := path.LCP(paths); common != "" {
-		output = common
+		for _, p := range paths {
+			if p == common {
+				output = common
+				break
+			}
+		}
 	}
 
 	fmt.Fprintf(c.App.Writer, "%s\n", output)
-
 	return nil
 }
+
+

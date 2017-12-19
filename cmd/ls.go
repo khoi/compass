@@ -27,7 +27,7 @@ func CmdLs(c *cli.Context) error {
 		filtered = entries
 	} else {
 		for _, e := range entries {
-			if strings.Contains(strings.ToLower(e.Path), query) {
+			if strings.Contains(e.Path, query) {
 				filtered = append(filtered, e)
 			}
 		}
