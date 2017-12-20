@@ -9,7 +9,7 @@ By default, `s` is the key-binding wrapper around `sextant`.
 - Fuzzily navigate to directory contains `go` and `sextant` :
 
 ```bash
-s gosextant 
+s sext
 # ~/Workspace/go/src/github.com/khoiln/sextant
 ```
 
@@ -37,4 +37,5 @@ eval "$(sextant shell)"
 
 - [ ] Add support for child queries. For instance: `s go gallery` 
 - [ ] Add shells auto completion
+- [ ] Add a cleanup command to remove non-exist folder
 
