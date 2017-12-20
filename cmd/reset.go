@@ -1,11 +1,18 @@
 package cmd
 
 import (
-	"github.com/khoiln/sextant/pkg/database"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 )
 
-func CmdReset(c *cli.Context) error {
-	db := c.App.Metadata["db"].(database.DB)
-	return db.Truncate()
+// resetCmd represents the reset command
+var resetCmd = &cobra.Command{
+	Use:   "reset",
+	Short: "Reset the database.",
+	Run: func(cmd *cobra.Command, args []string) {
+		fileDb.Truncate()
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(resetCmd)
 }

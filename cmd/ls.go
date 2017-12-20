@@ -1,52 +1,55 @@
 package cmd
 
 import (
+	"fmt"
 	"sort"
 	"strings"
 
-	"fmt"
-
-	"github.com/khoiln/sextant/pkg/database"
 	"github.com/khoiln/sextant/pkg/entry"
 	"github.com/khoiln/sextant/pkg/path"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 )
 
-func CmdLs(c *cli.Context) error {
-	db := c.App.Metadata["db"].(database.DB)
-	query := c.Args().First()
-	entries, err := db.Read()
+// lsCmd represents the ls command
+var lsCmd = &cobra.Command{
+	Use:   "ls",
+	Short: "List the directories along with their ranking",
+	Run:   lsRun,
+}
 
-	if err != nil {
-		return err
+func lsRun(cmd *cobra.Command, args []string) {
+	var query string
+	var entries []*entry.Entry
+	var filtered []*entry.Entry
+	var filteredPaths []string
+	var err error
+
+	if len(args) > 0 {
+		query = args[0]
 	}
 
-	var filtered []*entry.Entry
+	if entries, err = fileDb.Read(); err != nil {
+		exit(err)
+	}
 
-	if query == "" {
-		filtered = entries
-	} else {
-		for _, e := range entries {
-			if strings.Contains(e.Path, query) {
-				filtered = append(filtered, e)
-			}
+	for _, e := range entries {
+		if strings.Contains(e.Path, query) {
+			filtered = append(filtered, e)
+			filteredPaths = append(filteredPaths, e.Path)
 		}
 	}
 
 	sort.Sort(entry.ByFerecency(filtered))
 
-	var paths []string
-	for _, e := range filtered {
-		paths = append(paths, e.Path)
-	}
-
-	if common := path.LCP(paths); common != "" {
-		fmt.Fprintf(c.App.Writer, "common \t %s\n", common)
+	if common := path.LCP(filteredPaths); common != "" {
+		fmt.Printf("common \t %s\n", common)
 	}
 
 	for _, e := range filtered {
-		fmt.Fprintf(c.App.Writer, "%d \t %s\n", entry.Frecency(e), e.Path)
+		fmt.Printf("%d \t %s\n", entry.Frecency(e), e.Path)
 	}
+}
 
-	return nil
+func init() {
+	rootCmd.AddCommand(lsCmd)
 }

@@ -1,27 +1,37 @@
 package cmd
 
 import (
+	"errors"
 	"path/filepath"
-
 	"sort"
-
 	"time"
 
-	"github.com/khoiln/sextant/pkg/database"
 	"github.com/khoiln/sextant/pkg/entry"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 )
 
-func CmdAdd(c *cli.Context) error {
-	db := c.App.Metadata["db"].(database.DB)
-	path, err := filepath.Abs(c.Args().Get(0))
-	if err != nil {
-		return cli.NewExitError(err.Error(), 1)
+// addCmd represents the add command
+var addCmd = &cobra.Command{
+	Use:   "add",
+	Short: "Add a folder to the database",
+	Run:   addRun,
+}
+
+func addRun(cmd *cobra.Command, args []string) {
+	if len(args) == 0 {
+		exit(errors.New("Missing folder."))
 	}
 
-	entries, err := db.Read()
+	path, err := filepath.Abs(args[0])
+
 	if err != nil {
-		return cli.NewExitError(err.Error(), 1)
+		exit(err)
+	}
+
+	entries, err := fileDb.Read()
+
+	if err != nil {
+		exit(err)
 	}
 
 	sort.Sort(entry.ByPath(entries))
@@ -42,9 +52,11 @@ func CmdAdd(c *cli.Context) error {
 		}
 	}
 
-	if err := db.Write(entries); err != nil {
-		return err
+	if err := fileDb.Write(entries); err != nil {
+		exit(err)
 	}
+}
 
-	return nil
+func init() {
+	rootCmd.AddCommand(addCmd)
 }

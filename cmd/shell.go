@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 )
 
 const sh = `#!bin/sh
@@ -46,12 +46,6 @@ s() {
 }
 `
 
-func CmdShell(c *cli.Context) error {
-	shell := c.String("type")
-	fmt.Fprint(c.App.Writer, scriptForShell(shell))
-	return nil
-}
-
 func scriptForShell(shell string) string {
 	switch shell {
 	case "sh":
@@ -63,4 +57,19 @@ func scriptForShell(shell string) string {
 	default:
 		return fmt.Sprintf("echo Sextant: We don't support %s shell yet :(", shell)
 	}
+}
+
+var shellType string
+
+var shellCmd = &cobra.Command{
+	Use:   "shell",
+	Short: "Prints out the shell integration scripts.",
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Printf(scriptForShell(shellType))
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(shellCmd)
+	shellCmd.Flags().StringVarP(&shellType, "type", "t", "sh", "Type of the shell (bash|zsh)")
 }

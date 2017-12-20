@@ -5,49 +5,54 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/khoiln/sextant/pkg/database"
+	"errors"
+
 	"github.com/khoiln/sextant/pkg/entry"
 	"github.com/khoiln/sextant/pkg/path"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 )
 
-func CmdCd(c *cli.Context) error {
-	db := c.App.Metadata["db"].(database.DB)
-	query := c.Args().First()
+var cdCmd = &cobra.Command{
+	Use:   "cd",
+	Short: "Print the top match for search terms",
+	Run:   cdRun,
+}
 
-	entries, err := db.Read()
+func cdRun(cmd *cobra.Command, args []string) {
+	var query string
+
+	if len(args) > 0 {
+		query = args[0]
+	}
+
+	entries, err := fileDb.Read()
 
 	if err != nil {
-		return err
+		exit(err)
 	}
 
 	var filtered []*entry.Entry
+	var filteredPaths []string
 
-	if query == "" {
-		filtered = entries
-	} else {
-		for _, e := range entries {
-			if strings.Contains(e.Path, query) {
-				filtered = append(filtered, e)
-			}
+	for _, e := range entries {
+		if strings.Contains(e.Path, query) {
+			filtered = append(filtered, e)
 		}
 	}
 
 	sort.Sort(entry.ByFerecency(filtered))
 
-	var paths []string
-
 	for _, e := range filtered {
-		paths = append(paths, e.Path)
+		filteredPaths = append(filteredPaths, e.Path)
 	}
 
-	if len(paths) == 0 {
-		return cli.NewExitError("", 1)
+	if len(filteredPaths) == 0 {
+		exit(errors.New(""))
 	}
 
-	output := paths[len(paths)-1]
-	if common := path.LCP(paths); common != "" {
-		for _, p := range paths {
+	output := filteredPaths[len(filteredPaths)-1]
+	if common := path.LCP(filteredPaths); common != "" {
+		for _, p := range filteredPaths {
 			if p == common {
 				output = common
 				break
@@ -55,8 +60,9 @@ func CmdCd(c *cli.Context) error {
 		}
 	}
 
-	fmt.Fprintf(c.App.Writer, "%s\n", output)
-	return nil
+	fmt.Printf("%s\n", output)
 }
 
-
+func init() {
+	rootCmd.AddCommand(cdCmd)
+}

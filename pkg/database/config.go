@@ -2,15 +2,9 @@ package database
 
 import (
 	"encoding/csv"
-	"os/user"
-	"path/filepath"
 	"strconv"
 
 	"github.com/khoiln/sextant/pkg/entry"
-)
-
-const (
-	defaultFileName = ".sextant"
 )
 
 type DB interface {
@@ -91,16 +85,4 @@ func New(filePath string) (DB, error) {
 	return &fileDb{
 		dbPath: filePath,
 	}, nil
-}
-
-func NewDefault() (DB, error) {
-	usr, err := user.Current()
-
-	if err != nil {
-		return nil, err
-	}
-
-	fullFilePath := filepath.Join(usr.HomeDir, defaultFileName)
-
-	return New(fullFilePath)
 }
