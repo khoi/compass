@@ -19,18 +19,21 @@ type fileDb struct {
 
 func (f *fileDb) Write(entries []*entry.Entry) error {
 	file, err := createOrOpenLockedFile(f.dbPath)
+	defer closeLockedFile(file)
+
+	err = file.Truncate(0)
+	_, err = file.Seek(0, 0)
 	if err != nil {
 		return err
 	}
-	defer closeLockedFile(file)
 
 	w := csv.NewWriter(file)
 	defer w.Flush()
 
-	for _, entry := range entries {
-		data := []string{entry.Path, strconv.Itoa(entry.VisitedCount), strconv.Itoa(entry.LastVisited)}
+	for _, e := range entries {
+		data := []string{e.Path, strconv.Itoa(e.VisitedCount), strconv.Itoa(e.LastVisited)}
 		if err := w.Write(data); err != nil {
-			return nil
+			return err
 		}
 	}
 
