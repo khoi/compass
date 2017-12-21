@@ -37,5 +37,5 @@ eval "$(sextant shell)"
 
 - [ ] Add support for child queries. For instance: `s go gallery` 
 - [ ] Add shells auto completion
-- [ ] Add a cleanup command to remove non-exist folder
+- [x] Add a cleanup command to remove non-exist folder
 
