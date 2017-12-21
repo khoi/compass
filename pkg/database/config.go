@@ -4,7 +4,7 @@ import (
 	"encoding/csv"
 	"strconv"
 
-	"github.com/khoiln/sextant/pkg/entry"
+	"github.com/khoiracle/sextant/pkg/entry"
 )
 
 type DB interface {

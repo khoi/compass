@@ -1,5 +1,5 @@
-[![CircleCI](https://circleci.com/gh/khoiln/sextant.svg?style=shield)](https://circleci.com/gh/khoiln/sextant) [![Go Report Card](https://goreportcard.com/badge/github.com/khoiln/sextant)](https://goreportcard.com/report/github.com/khoiln/sextant)
-<img width="200" align="right" src="https://github.com/khoiln/sextant/blob/master/logo.svg">
+[![CircleCI](https://circleci.com/gh/khoiracle/sextant.svg?style=shield)](https://circleci.com/gh/khoiracle/sextant) [![Go Report Card](https://goreportcard.com/badge/github.com/khoiracle/sextant)](https://goreportcard.com/report/github.com/khoiracle/sextant)
+<img width="200" align="right" src="https://github.com/khoiracle/sextant/blob/master/logo.svg">
 # Sextant 
 Sextant learns your habit, and help navigate to your "frecently used" directory.
 
@@ -10,7 +10,7 @@ By default, `s` is the key-binding wrapper around `sextant`.
 
 ```bash
 s sext
-# ~/Workspace/go/src/github.com/khoiln/sextant
+# ~/Workspace/go/src/github.com/khoiracle/sextant
 ```
 
 - For more option refer to:
@@ -24,7 +24,7 @@ sextant --help
 To install, use `go get`:
 
 ```bash
-$ go get github.com/khoiln/sextant
+$ go get github.com/khoiracle/sextant
 ```
 
 Add this to the end of your `.zshrc` or `.bash_profile` 

@@ -7,7 +7,7 @@ import (
 	"os/user"
 	"path/filepath"
 
-	"github.com/khoiln/sextant/pkg/database"
+	"github.com/khoiracle/sextant/pkg/database"
 	"github.com/spf13/cobra"
 )
 
