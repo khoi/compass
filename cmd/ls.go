@@ -17,6 +17,8 @@ var lsCmd = &cobra.Command{
 	Run:   lsRun,
 }
 
+var pathOnly bool
+
 func lsRun(cmd *cobra.Command, args []string) {
 	var query string
 	var entries []*entry.Entry
@@ -41,15 +43,20 @@ func lsRun(cmd *cobra.Command, args []string) {
 
 	sort.Sort(entry.ByFerecency(filtered))
 
-	if common := path.LCP(filteredPaths); common != "" {
+	if common := path.LCP(filteredPaths); common != "" && !pathOnly {
 		fmt.Printf("common \t %s\n", common)
 	}
 
 	for _, e := range filtered {
-		fmt.Printf("%d \t %s\n", entry.Frecency(e), e.Path)
+		if pathOnly {
+			fmt.Printf("%s\n", e.Path)
+		} else {
+			fmt.Printf("%d \t %s\n", entry.Frecency(e), e.Path)
+		}
 	}
 }
 
 func init() {
 	rootCmd.AddCommand(lsCmd)
+	lsCmd.Flags().BoolVar(&pathOnly, "path-only", false, "Prints out only path without score")
 }
