@@ -29,7 +29,7 @@ const zsh = `__sextant_chpwd() {
 }
 s() {
 	local output="$(sextant cd $@)"
-	test -d "$output" && builtin cd "$output"
+	(test -d "$output" && builtin cd "$output") || (sextant cleanup && false)
 }
 `
 
@@ -42,7 +42,7 @@ grep "sextant add" <<< "$PROMPT_COMMAND" >/dev/null || {
 }
 s() {
 	local output="$(sextant cd $@)"
-	test -d "$output" && builtin cd "$output"
+	(test -d "$output" && builtin cd "$output") || (sextant cleanup && false)
 }
 `
 
