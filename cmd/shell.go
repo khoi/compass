@@ -29,8 +29,16 @@ const zsh = `__sextant_chpwd() {
 }
 s() {
 	local output="$(sextant cd $@)"
-	(test -d "$output" && builtin cd "$output") || (sextant cleanup && false)
+	if [ -d "$output" ]; then
+		test -d "$output" && builtin cd "$output"
+	else
+		sextant cleanup && false
+	fi
 }
+__sextant_completion() {
+	reply=(${(f)"$(sextant ls --path-only "$1")"})
+}
+compctl -U -K __sextant_completion s
 `
 
 const bash = `__sextant_chpwd() {
@@ -42,7 +50,11 @@ grep "sextant add" <<< "$PROMPT_COMMAND" >/dev/null || {
 }
 s() {
 	local output="$(sextant cd $@)"
-	(test -d "$output" && builtin cd "$output") || (sextant cleanup && false)
+	if [ -d "$output" ]; then
+		test -d "$output" && builtin cd "$output"
+	else
+		sextant cleanup && false
+	fi
 }
 `
 
