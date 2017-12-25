@@ -39,3 +39,7 @@ eval "$(sextant shell)"
 - [ ] Add shells auto completion
 - [x] Add a cleanup command to remove non-exist folder
 
+## References
+
+- [rupa/z](https://github.com/rupa/z)
+- [wting/autojump](https://github.com/wting/autojump)
