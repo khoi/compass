@@ -38,6 +38,7 @@ eval "$(sextant shell)"
 - [ ] Add support for child queries. For instance: `s go gallery` 
 - [ ] Add shells auto completion
 - [ ] Allow custom key binding
+- [ ] Smart case lookup
 
 ## References
 
