@@ -56,6 +56,7 @@ s() {
 		sextant cleanup && false
 	fi
 }
+complete -o dirnames -C 'sextant ls --path-only "${COMP_LINE/#s /}"' s
 `
 
 func scriptForShell(shell string) string {
