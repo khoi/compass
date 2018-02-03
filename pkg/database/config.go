@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/khoiracle/sextant/pkg/entry"
+	"github.com/khoiracle/sextant/pkg/file"
 )
 
 type DB interface {
@@ -18,16 +19,19 @@ type fileDb struct {
 }
 
 func (f *fileDb) Write(entries []*entry.Entry) error {
-	file, err := createOrOpenLockedFile(f.dbPath)
-	defer closeLockedFile(file)
+	flock := file.NewFlock(f.dbPath)
+	if err := flock.Lock(); err != nil {
+		return err
+	}
+	defer flock.Unlock()
 
-	err = file.Truncate(0)
-	_, err = file.Seek(0, 0)
+	err := flock.File().Truncate(0)
+	_, err = flock.File().Seek(0, 0)
 	if err != nil {
 		return err
 	}
 
-	w := csv.NewWriter(file)
+	w := csv.NewWriter(flock.File())
 	defer w.Flush()
 
 	for _, e := range entries {
@@ -41,13 +45,13 @@ func (f *fileDb) Write(entries []*entry.Entry) error {
 }
 
 func (f *fileDb) Read() ([]*entry.Entry, error) {
-	file, err := createOrOpenLockedFile(f.dbPath)
-	if err != nil {
+	flock := file.NewFlock(f.dbPath)
+	if err := flock.Lock(); err != nil {
 		return nil, err
 	}
-	defer closeLockedFile(file)
+	defer flock.Unlock()
 
-	r := csv.NewReader(file)
+	r := csv.NewReader(flock.File())
 	records, err := r.ReadAll()
 
 	if err != nil {
@@ -74,14 +78,13 @@ func (f *fileDb) Read() ([]*entry.Entry, error) {
 }
 
 func (f *fileDb) Truncate() error {
-	file, err := createOrOpenLockedFile(f.dbPath)
-	if err != nil {
+	flock := file.NewFlock(f.dbPath)
+	if err := flock.Lock(); err != nil {
 		return err
 	}
-	defer closeLockedFile(file)
-
-	file.Truncate(0)
-	return file.Sync()
+	defer flock.Unlock()
+	flock.File().Truncate(0)
+	return flock.File().Sync()
 }
 
 func New(filePath string) (DB, error) {
