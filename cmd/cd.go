@@ -40,6 +40,16 @@ func cdRun(cmd *cobra.Command, args []string) {
 		}
 	}
 
+	// Found 0 results, try case in-sensitive matching
+	if len(filtered) == 0 {
+		for _, e := range entries {
+			if strings.Contains(strings.ToLower(e.Path), strings.ToLower(query)) {
+				filtered = append(filtered, e)
+				filteredPaths = append(filteredPaths, e.Path)
+			}
+		}
+	}
+
 	sort.Sort(entry.ByFerecency(filtered))
 
 	for _, e := range filtered {
