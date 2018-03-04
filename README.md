@@ -42,3 +42,4 @@ eval "$(sextant shell)"
 
 - [rupa/z](https://github.com/rupa/z)
 - [wting/autojump](https://github.com/wting/autojump)
+- [gsamokovarov/jump](https://github.com/gsamokovarov/jump)
