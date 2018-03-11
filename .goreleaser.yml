@@ -5,3 +5,12 @@ builds:
       - linux
     goarch:
       - amd64
+
+brew:
+  name: sextant
+
+  github: 
+    owner: khoiracle
+    name: homebrew-tap
+
+  folder: Formula
