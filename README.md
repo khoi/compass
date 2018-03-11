@@ -21,7 +21,13 @@ sextant --help
 
 ## Install
 
-To install, use `go get`:
+Use Homebrew:
+
+```bash
+$ brew install khoiracle/tap/sextant
+```
+
+For development build:
 
 ```bash
 $ go get github.com/khoiracle/sextant
