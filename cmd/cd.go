@@ -34,20 +34,13 @@ func cdRun(cmd *cobra.Command, args []string) {
 	var filtered []*entry.Entry
 	var filteredPaths []string
 
-	for _, e := range entries {
-		if strings.Contains(e.Path, query) {
-			filtered = append(filtered, e)
-		}
-	}
+	matchedEntries := entry.Entries(entries).Filter(func(e *entry.Entry) bool {
+		return strings.Contains(e.Path, query) || strings.Contains(strings.ToLower(e.Path), strings.ToLower(query))
+	})
 
-	// Found 0 results, try case in-sensitive matching
-	if len(filtered) == 0 {
-		for _, e := range entries {
-			if strings.Contains(strings.ToLower(e.Path), strings.ToLower(query)) {
-				filtered = append(filtered, e)
-				filteredPaths = append(filteredPaths, e.Path)
-			}
-		}
+	for _, e := range matchedEntries {
+		filtered = append(filtered, e)
+		filteredPaths = append(filteredPaths, e.Path)
 	}
 
 	sort.Sort(entry.ByFrecency(filtered))
