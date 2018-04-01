@@ -14,16 +14,16 @@ func (e ByPath) Swap(i, j int) {
 	e[i], e[j] = e[j], e[i]
 }
 
-type ByFerecency []*Entry
+type ByFrecency []*Entry
 
-func (e ByFerecency) Len() int {
+func (e ByFrecency) Len() int {
 	return len(e)
 }
 
-func (e ByFerecency) Less(i, j int) bool {
+func (e ByFrecency) Less(i, j int) bool {
 	return Frecency(e[i]) < Frecency(e[j])
 }
 
-func (e ByFerecency) Swap(i, j int) {
+func (e ByFrecency) Swap(i, j int) {
 	e[i], e[j] = e[j], e[i]
 }

@@ -51,7 +51,7 @@ func lsRun(cmd *cobra.Command, args []string) {
 		}
 	}
 
-	sort.Sort(entry.ByFerecency(filtered))
+	sort.Sort(entry.ByFrecency(filtered))
 
 	if common := path.LCP(filteredPaths); common != "" && !pathOnly {
 		fmt.Printf("common \t %s\n", common)

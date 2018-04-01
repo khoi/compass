@@ -50,7 +50,7 @@ func cdRun(cmd *cobra.Command, args []string) {
 		}
 	}
 
-	sort.Sort(entry.ByFerecency(filtered))
+	sort.Sort(entry.ByFrecency(filtered))
 
 	for _, e := range filtered {
 		filteredPaths = append(filteredPaths, e.Path)
