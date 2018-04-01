@@ -39,6 +39,14 @@ Add this to the end of your `.zshrc` or `.bash_profile`
 eval "$(sextant shell)"
 ```
 
+For fish shell add the line below to your `~/.config/fish/config.fish`
+
+```bash
+if type -q sextant
+  status --is-interactive; and source (sextant shell --type fish -|psub)
+end
+```
+
 ## Improvements
 
 - [ ] Add support for child queries. For instance: `s go gallery` 

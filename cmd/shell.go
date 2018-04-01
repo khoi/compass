@@ -11,6 +11,8 @@ if [ -n "${BASH}" ]; then
 	shell="bash"
 elif [ -n "${ZSH_NAME}" ]; then
 	shell="zsh"
+elif [ -n "${__fish_datadir}" ]; then
+    shell="fish"
 else
 	shell=$(echo "${SHELL}" | awk -F/ '{ print $NF }')
 fi
@@ -30,7 +32,7 @@ const zsh = `__sextant_chpwd() {
 s() {
 	local output="$(sextant cd $@)"
 	if [ -d "$output" ]; then
-		test -d "$output" && builtin cd "$output"
+		builtin cd "$output"
 	else
 		sextant cleanup && false
 	fi
@@ -51,12 +53,24 @@ grep "sextant add" <<< "$PROMPT_COMMAND" >/dev/null || {
 s() {
 	local output="$(sextant cd $@)"
 	if [ -d "$output" ]; then
-		test -d "$output" && builtin cd "$output"
+		builtin cd "$output"
 	else
 		sextant cleanup && false
 	fi
 }
 complete -o dirnames -C 'sextant ls --path-only "${COMP_LINE/#s /}"' s
+`
+
+const fish = `function s
+	set -l output (sextant cd $argv)
+	if test -d "$output" 
+		cd $output
+	else
+		sextant cleanup; false
+	end
+end
+
+complete -c s -x -a '(sextant ls --path-only (commandline -t))'
 `
 
 func scriptForShell(shell string) string {
@@ -67,6 +81,8 @@ func scriptForShell(shell string) string {
 		return bash
 	case "zsh":
 		return zsh
+	case "fish":
+		return fish
 	default:
 		return fmt.Sprintf("echo Sextant: We don't support %s shell yet :(", shell)
 	}
@@ -84,5 +100,5 @@ var shellCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(shellCmd)
-	shellCmd.Flags().StringVarP(&shellType, "type", "t", "sh", "Type of the shell (bash|zsh)")
+	shellCmd.Flags().StringVarP(&shellType, "type", "t", "sh", "Type of the shell (bash|zsh|fish)")
 }
