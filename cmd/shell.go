@@ -45,7 +45,7 @@ compctl -U -K __sextant_completion s
 
 const bash = `__sextant_chpwd() {
 	[[ "$(pwd)" == "$HOME" ]] && return
-    sextant add "$(pwd)"
+    (sextant add "$(pwd)" &)
 }
 grep "sextant add" <<< "$PROMPT_COMMAND" >/dev/null || {
 	PROMPT_COMMAND="$PROMPT_COMMAND"$'\n''(__sextant_chpwd 2>/dev/null &);'
@@ -68,6 +68,11 @@ const fish = `function s
 	else
 		sextant cleanup; false
 	end
+end
+
+function __sextant_add --on-variable PWD
+    status --is-command-substitution; and return
+    sextant add (pwd)
 end
 
 complete -c s -x -a '(sextant ls --path-only (commandline -t))'
