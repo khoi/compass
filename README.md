@@ -47,6 +47,14 @@ if type -q sextant
 end
 ```
 
+If you want to use different key binding pass `--bind-to` to the `sextant shell` command:
+
+For instance, if you want to use `z` instead of `s`
+
+```bash
+eval "$(sextant shell --bind-to z)"
+```
+
 ## Improvements
 
 - [ ] Add support for child queries. For instance: `s go gallery` 
