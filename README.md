@@ -24,13 +24,13 @@ sextant --help
 Use Homebrew:
 
 ```bash
-$ brew install khoiracle/tap/sextant
+brew install khoiracle/tap/sextant
 ```
 
 For development build:
 
 ```bash
-$ go get github.com/khoiracle/sextant
+go get github.com/khoiracle/sextant
 ```
 
 Add this to the end of your `.zshrc` or `.bash_profile` 
