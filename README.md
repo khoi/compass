@@ -58,7 +58,6 @@ eval "$(sextant shell --bind-to z)"
 ## Improvements
 
 - [ ] Add support for child queries. For instance: `s go gallery` 
-- [ ] Allow custom key binding
 
 ## References
 
