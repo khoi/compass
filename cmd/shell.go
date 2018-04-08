@@ -23,7 +23,7 @@ fi
 if [ "${shell}" = "sh" ]; then
 	return 0
 fi
-eval "$(sextant shell --type "$shell" --binding {{.Binding}})"
+eval "$(sextant shell --type "$shell" --bind-to {{.Binding}})"
 `
 
 const zsh = `__sextant_chpwd() {
