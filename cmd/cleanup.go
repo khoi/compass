@@ -24,6 +24,7 @@ var cleanupCmd = &cobra.Command{
 		for _, e := range entries {
 			if _, err := os.Stat(e.Path); err == nil {
 				valid = append(valid, e)
+				continue
 			}
 			fmt.Fprintf(os.Stdout, "Removing: %s\n", e.Path)
 		}
