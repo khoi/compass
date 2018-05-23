@@ -10,7 +10,7 @@ brew:
   name: sextant
 
   github: 
-    owner: khoiracle
+    owner: khoi
     name: homebrew-tap
 
   folder: Formula
