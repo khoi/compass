@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/khoiracle/sextant/pkg/entry"
@@ -24,6 +25,7 @@ var cleanupCmd = &cobra.Command{
 			if _, err := os.Stat(e.Path); err == nil {
 				valid = append(valid, e)
 			}
+			fmt.Fprintf(os.Stdout, "Removing: %s\n", e.Path)
 		}
 
 		if err := fileDb.Write(valid); err != nil {
