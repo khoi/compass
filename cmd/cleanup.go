@@ -13,6 +13,8 @@ var cleanupCmd = &cobra.Command{
 	Use:   "cleanup",
 	Short: "Remove non-existing folder from the database",
 	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("compass cleaning up.")
+
 		entries, err := fileDb.Read()
 
 		if err != nil {
@@ -26,7 +28,7 @@ var cleanupCmd = &cobra.Command{
 				valid = append(valid, e)
 				continue
 			}
-			fmt.Fprintf(os.Stdout, "Removing: %s\n", e.Path)
+			fmt.Fprintf(os.Stdout, "Removed %s\n", e.Path)
 		}
 
 		if err := fileDb.Write(valid); err != nil {

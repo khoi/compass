@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"errors"
+	"fmt"
 	"path/filepath"
 
 	"github.com/khoi/compass/pkg/entry"
@@ -38,6 +39,8 @@ func removeRun(cmd *cobra.Command, args []string) {
 	if err := fileDb.Write(newEntries); err != nil {
 		exit(err)
 	}
+
+	fmt.Printf("%s removed.\n", path)
 }
 
 func init() {
