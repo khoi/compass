@@ -5,16 +5,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// resetCmd represents the reset command
-var resetCmd = &cobra.Command{
-	Use:   "reset",
-	Short: "Reset the database.",
+var purgeCmd = &cobra.Command{
+	Use:   "purge",
+	Short: "Purge the database.",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("Resetting %s. \n", cfgFile)
+		fmt.Printf("%s purged.\n", cfgFile)
 		fileDb.Truncate()
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(resetCmd)
+	rootCmd.AddCommand(purgeCmd)
 }
