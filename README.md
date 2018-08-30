@@ -9,7 +9,7 @@ By default, `s` is the key-binding wrapper around `compass`.
 - Fuzzily navigate to directory contains `go` and `compass` :
 
 ```bash
-s sext
+s compass
 # ~/Workspace/go/src/github.com/khoi/compass
 ```
 
