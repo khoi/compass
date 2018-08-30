@@ -4,7 +4,7 @@ import (
 	"errors"
 	"path/filepath"
 
-	"github.com/khoiracle/sextant/pkg/entry"
+	"github.com/khoi/compass/pkg/entry"
 	"github.com/spf13/cobra"
 )
 

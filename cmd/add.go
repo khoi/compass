@@ -6,7 +6,7 @@ import (
 	"sort"
 	"time"
 
-	"github.com/khoiracle/sextant/pkg/entry"
+	"github.com/khoi/compass/pkg/entry"
 	"github.com/spf13/cobra"
 )
 

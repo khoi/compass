@@ -7,8 +7,8 @@ import (
 
 	"errors"
 
-	"github.com/khoiracle/sextant/pkg/entry"
-	"github.com/khoiracle/sextant/pkg/path"
+	"github.com/khoi/compass/pkg/entry"
+	"github.com/khoi/compass/pkg/path"
 	"github.com/spf13/cobra"
 )
 

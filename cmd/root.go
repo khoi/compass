@@ -7,18 +7,18 @@ import (
 	"os/user"
 	"path/filepath"
 
-	"github.com/khoiracle/sextant/pkg/database"
+	"github.com/khoi/compass/pkg/database"
 	"github.com/spf13/cobra"
 )
 
-var defaultConfigFileName = ".sextant"
+var defaultConfigFileName = ".compass"
 var cfgFile string
 var fileDb database.DB
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "sextant",
-	Short: "Sextant, navigate around your pirate 🛳",
+	Use:   "compass",
+	Short: "Compass, navigate around your pirate 🛳",
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -31,7 +31,7 @@ func Execute() {
 
 func init() {
 	cobra.OnInitialize(initDB)
-	rootCmd.PersistentFlags().StringVarP(&cfgFile, "file", "f", "", "path to the db file (default is $HOME/.sextant)")
+	rootCmd.PersistentFlags().StringVarP(&cfgFile, "file", "f", "", "path to the db file (default is $HOME/.compass)")
 }
 
 func initDB() {

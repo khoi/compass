@@ -5,7 +5,7 @@ jobs:
     docker:
       - image: circleci/golang:1.9.2
 
-    working_directory: /go/src/github.com/khoiracle/sextant
+    working_directory: /go/src/github.com/khoiracle/compass
 
     environment:
       TEST_RESULTS: /tmp/test-results

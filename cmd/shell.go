@@ -23,63 +23,63 @@ fi
 if [ "${shell}" = "sh" ]; then
 	return 0
 fi
-eval "$(sextant shell --type "$shell" --bind-to {{.Binding}})"
+eval "$(compass shell --type "$shell" --bind-to {{.Binding}})"
 `
 
-const zsh = `__sextant_chpwd() {
+const zsh = `__compass_chpwd() {
 	[[ "$(pwd)" == "$HOME" ]] && return
-    (sextant add "$(pwd)" &)
+    (compass add "$(pwd)" &)
 }
-[[ -n "${precmd_functions[(r)__sextant_chpwd]}" ]] || {
-	precmd_functions[$(($#precmd_functions+1))]=__sextant_chpwd
+[[ -n "${precmd_functions[(r)__compass_chpwd]}" ]] || {
+	precmd_functions[$(($#precmd_functions+1))]=__compass_chpwd
 }
 {{.Binding}}() {
-	local output="$(sextant cd $@)"
+	local output="$(compass cd $@)"
 	if [ -d "$output" ]; then
 		builtin cd "$output"
 	else
-		sextant cleanup && false
+		compass cleanup && false
 	fi
 }
-__sextant_completion() {
-	reply=(${(f)"$(sextant ls --path-only "$1")"})
+__compass_completion() {
+	reply=(${(f)"$(compass ls --path-only "$1")"})
 }
-compctl -U -K __sextant_completion {{.Binding}}
+compctl -U -K __compass_completion {{.Binding}}
 `
 
-const bash = `__sextant_chpwd() {
+const bash = `__compass_chpwd() {
 	[[ "$(pwd)" == "$HOME" ]] && return
-    (sextant add "$(pwd)" &)
+    (compass add "$(pwd)" &)
 }
-grep "sextant add" <<< "$PROMPT_COMMAND" >/dev/null || {
-	PROMPT_COMMAND="$PROMPT_COMMAND"$'\n''(__sextant_chpwd 2>/dev/null &);'
+grep "compass add" <<< "$PROMPT_COMMAND" >/dev/null || {
+	PROMPT_COMMAND="$PROMPT_COMMAND"$'\n''(__compass_chpwd 2>/dev/null &);'
 }
 {{.Binding}}() {
-	local output="$(sextant cd $@)"
+	local output="$(compass cd $@)"
 	if [ -d "$output" ]; then
 		builtin cd "$output"
 	else
-		sextant cleanup && false
+		compass cleanup && false
 	fi
 }
-complete -o dirnames -C 'sextant ls --path-only "${COMP_LINE/#{{.Binding}} /}"' {{.Binding}}
+complete -o dirnames -C 'compass ls --path-only "${COMP_LINE/#{{.Binding}} /}"' {{.Binding}}
 `
 
 const fish = `function {{.Binding}}
-	set -l output (sextant cd $argv)
+	set -l output (compass cd $argv)
 	if test -d "$output" 
 		cd $output
 	else
-		sextant cleanup; false
+		compass cleanup; false
 	end
 end
 
-function __sextant_add --on-variable PWD
+function __compass_add --on-variable PWD
     status --is-command-substitution; and return
-    sextant add (pwd)
+    compass add (pwd)
 end
 
-complete -c {{.Binding}} -x -a '(sextant ls --path-only (commandline -t))'
+complete -c {{.Binding}} -x -a '(compass ls --path-only (commandline -t))'
 `
 
 func scriptForShell(shell string, keyBinding string) string {
@@ -100,7 +100,7 @@ func scriptForShell(shell string, keyBinding string) string {
 		}
 	}()
 
-	tmpl, err := template.New("sextant").Parse(shellType)
+	tmpl, err := template.New("compass").Parse(shellType)
 
 	if err != nil {
 		panic(err)

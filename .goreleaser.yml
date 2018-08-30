@@ -1,5 +1,5 @@
 builds:
-  - binary: sextant
+  - binary: compass
     goos:
       - darwin
       - linux
@@ -7,7 +7,7 @@ builds:
       - amd64
 
 brew:
-  name: sextant
+  name: compass
 
   github: 
     owner: khoi

@@ -14,7 +14,7 @@
 
 package main
 
-import "github.com/khoiracle/sextant/cmd"
+import "github.com/khoi/compass/cmd"
 
 func main() {
 	cmd.Execute()
