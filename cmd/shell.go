@@ -76,6 +76,9 @@ end
 
 function __compass_add --on-variable PWD
     status --is-command-substitution; and return
+		if contains -- (pwd) $HOME
+			return
+		end
     compass add (pwd)
 end
 
