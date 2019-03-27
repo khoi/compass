@@ -13,6 +13,7 @@ import (
 
 var defaultConfigFileName = ".compass"
 var cfgFile string
+var verbose bool
 var fileDb database.DB
 
 // rootCmd represents the base command when called without any subcommands
@@ -32,6 +33,7 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initDB)
 	rootCmd.PersistentFlags().StringVarP(&cfgFile, "file", "f", "", "path to the db file (default is $HOME/.compass)")
+	rootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "verbose output")
 }
 
 func initDB() {
