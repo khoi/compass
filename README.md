@@ -1,4 +1,5 @@
-[![Go Report Card](https://goreportcard.com/badge/github.com/khoi/compass)](https://goreportcard.com/report/github.com/khoi/compass)
+[![Action](https://github.com/khoi/compass/workflows/test/badge.svg)](https://github.com/khoi/compass/actions)
+[![@khoiracle](https://img.shields.io/badge/contact-@khoiracle-4bbee3.svg?style=flat)](https://twitter.com/khoiracle)
 <img width="200" align="right" src="https://github.com/khoi/compass/blob/master/logo.svg">
 # Compass
 Compass learns your habit, and help navigate to your "frecently used" directory.
