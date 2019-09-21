@@ -53,7 +53,7 @@ func lsRun(cmd *cobra.Command, args []string) {
 		if pathOnly {
 			fmt.Printf("%s\n", e.Path)
 		} else {
-			fmt.Printf("%d \t %s\n", entry.Frecency(e), e.Path)
+			fmt.Printf("%.2f \t %s\n", entry.Frecency(e), e.Path)
 		}
 	}
 }
