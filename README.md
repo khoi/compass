@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/khoi/compass.svg?style=shield)](https://circleci.com/gh/khoi/compass) [![Go Report Card](https://goreportcard.com/badge/github.com/khoi/compass)](https://goreportcard.com/report/github.com/khoi/compass)
+[![Go Report Card](https://goreportcard.com/badge/github.com/khoi/compass)](https://goreportcard.com/report/github.com/khoi/compass)
 <img width="200" align="right" src="https://github.com/khoi/compass/blob/master/logo.svg">
 # Compass
 Compass learns your habit, and help navigate to your "frecently used" directory.
