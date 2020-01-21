@@ -13,7 +13,7 @@ var cleanupCmd = &cobra.Command{
 	Use:   "cleanup",
 	Short: "Remove non-existing folder from the database",
 	Run: func(cmd *cobra.Command, args []string) {
-		if (verbose) {
+		if verbose {
 			fmt.Println("compass cleaning up.")
 		}
 		
@@ -30,7 +30,7 @@ var cleanupCmd = &cobra.Command{
 				valid = append(valid, e)
 				continue
 			}
-			if (verbose) {
+			if verbose {
 				fmt.Fprintf(os.Stdout, "Removed %s\n", e.Path)
 			}
 		}

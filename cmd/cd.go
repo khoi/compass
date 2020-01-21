@@ -19,10 +19,10 @@ var cdCmd = &cobra.Command{
 }
 
 func cdRun(cmd *cobra.Command, args []string) {
-	var query string
+	var queries []string
 
 	if len(args) > 0 {
-		query = args[0]
+		queries = args[0:]
 	}
 
 	entries, err := fileDb.Read()
@@ -31,12 +31,16 @@ func cdRun(cmd *cobra.Command, args []string) {
 		exit(err)
 	}
 
+	var matchedEntries = entry.Entries(entries)
+
+	for _, query := range queries {
+		matchedEntries = matchedEntries.Filter(func(e *entry.Entry) bool {
+			return strings.Contains(e.Path, query) || strings.Contains(strings.ToLower(e.Path), strings.ToLower(query))
+		})
+	}
+
 	var filtered []*entry.Entry
 	var filteredPaths []string
-
-	matchedEntries := entry.Entries(entries).Filter(func(e *entry.Entry) bool {
-		return strings.Contains(e.Path, query) || strings.Contains(strings.ToLower(e.Path), strings.ToLower(query))
-	})
 
 	for _, e := range matchedEntries {
 		filtered = append(filtered, e)
